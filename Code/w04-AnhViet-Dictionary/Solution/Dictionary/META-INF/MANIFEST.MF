@@ -1,0 +1,2 @@
+Main-Class: bin/DictionaryApp
+Class-Path: lib/dom-2.3.0-jaxb-1.0.6.jar
