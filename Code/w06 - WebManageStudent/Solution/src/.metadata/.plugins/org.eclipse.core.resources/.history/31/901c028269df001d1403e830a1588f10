@@ -1,0 +1,58 @@
+package com.nhp.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nhp.context.DBContext;
+import com.nhp.entity.StudentInCourse;
+
+public class StudentInCourseDAO {
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	public List<StudentInCourse> getListStudentInCourse(int courseId){
+		try {
+			String query = "SELECT s.StudentId, s.StudentName, s.Grade, s.BirthDate, s.Address, s.Note, cs.Score"
+					+ "FROM Student s"
+					+ "JOIN CourseStudent cs ON s.StudentId = cs.StudentId"
+					+ "WHERE cs.CourseId = ?";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, courseId);
+			
+			rs = ps.executeQuery();
+			
+			List<StudentInCourse> result = new ArrayList<>();
+			
+			while(rs.next()) {
+				int Id = rs.getInt(1);
+				String Name = rs.getString(2);
+				int Grade = rs.getInt(3);
+				String BirthDate = rs.getString(4);
+				String Address = rs.getString(5);
+				String Note = rs.getString(6);
+				Float Score = rs.getFloat(7);
+				
+				StudentInCourse studentCourse = new StudentInCourse(Id,Name,Grade,BirthDate,Address,Note,Score);
+				
+				result.add(studentCourse);
+			}
+			
+			System.out.print(result.toString());
+			
+			conn.close();
+			
+			return result;
+		} catch (Exception e) {
+			System.out.print("EXCEPTION GET O FILE STUDENICTDAO.JAVA");
+			System.out.print(e.getMessage());
+		}
+		
+		return null;
+	}
+}

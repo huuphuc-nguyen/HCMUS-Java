@@ -1,0 +1,6 @@
+package com.nhp.entity;
+
+public class CourseScore {
+	private int _courseId;
+	private float _score;
+}

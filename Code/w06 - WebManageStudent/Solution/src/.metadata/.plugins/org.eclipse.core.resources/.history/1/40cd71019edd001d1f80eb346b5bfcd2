@@ -1,0 +1,5 @@
+package com.nhp.context;
+
+public class DBContext {
+
+}

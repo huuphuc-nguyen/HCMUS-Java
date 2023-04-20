@@ -1,0 +1,80 @@
+package com.nhp.servlet;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class CourseServlet
+ */
+@WebServlet("/CourseServlet")
+public class CourseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private Connection conn; // instance variable for database connection
+       
+	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CourseServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    
+    
+    /**
+     * Initialize database connection
+     */
+    public void init() throws ServletException {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=QLSV";
+            String user = "yourusername";
+            String pass = "yourpassword";
+            conn = DriverManager.getConnection(dbURL, user, pass);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+   
+    
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	/**
+	 * Destroy database connection
+	 */
+	public void destroy() {
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

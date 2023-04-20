@@ -1,0 +1,69 @@
+package com.nhp.dao;
+
+import com.nhp.entity.*;
+import com.nhp.context.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.ArrayList;
+
+public class CourseDAO {
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	public List<Course> getListCourse(){
+		try {
+			String query = "SELECT * FROM Course";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			List<Course> result = new ArrayList<>();
+			
+			while(rs.next()) {
+				int Id = rs.getInt(1);
+				String Name = rs.getString(2);
+				String Lecture = rs.getString(3);
+				int Year = rs.getInt(4);
+				String Note = rs.getString(5);
+				
+				Course course = new Course(Id,Name,Lecture,Year,Note);
+				
+				result.add(course);
+			}
+			
+			System.out.print(result.toString());
+			
+			conn.close();
+			
+			return result;
+		} catch (Exception e) {
+			System.out.print("EXCEPTION GET O FILE COURSEDAO.JAVA");
+		}
+		
+		return null;
+	}
+	
+	public void addCourse(Course course) {
+		try {
+			
+			String query = "INSERT INTO Course (CourseId, CourseName, Lecture, Year, Note) VALUES (?, ?, ?, ?, ?)";
+			conn = new DBContext().getConnection();
+			ps.setString(1, String.valueOf(course.get_courseId()));
+            ps.setString(2, course.get_courseName());
+            ps.setString(3, course.get_lecture());
+            ps.setString(4, String.valueOf(course.get_year()));
+            ps.setString(5, course.get_note());
+            ps.executeUpdate();
+            conn.close();
+			
+			
+		} catch (Exception e) {
+			System.out.print("EXCEPTION POST O FILE COURSEDAO.JAVA");
+		}
+		
+	}
+}

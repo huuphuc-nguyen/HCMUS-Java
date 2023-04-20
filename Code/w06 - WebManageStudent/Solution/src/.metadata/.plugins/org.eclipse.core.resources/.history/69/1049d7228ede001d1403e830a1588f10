@@ -1,0 +1,5 @@
+package com.nhp.dao;
+
+public class StudentDAO {
+
+}

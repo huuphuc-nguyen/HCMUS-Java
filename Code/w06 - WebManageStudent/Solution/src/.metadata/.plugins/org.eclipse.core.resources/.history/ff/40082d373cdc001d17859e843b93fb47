@@ -1,0 +1,76 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+	<!-- ... -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ 
+    <!-- DevExtreme theme -->
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/22.2.5/css/dx.light.css">
+ 
+    <!-- DevExtreme library -->
+    <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/22.2.5/js/dx.all.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+	<style>
+        .option-btn {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 5px;
+            transition: transform 0.2s ease-out;
+        }
+
+        .option-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .option-btn .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .row {
+	        margin-top: 50px;
+	    }
+        
+        body {
+		    background: radial-gradient(circle at center, #CBF1F5, #E3FDFD);
+		}
+    </style>
+
+</head>
+<body>
+	<div class="container text-center mt-5">
+    <h2>Choose your option:</h2>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="students.jsp" class="option-btn" style="background-image: url('./resources/students.png');">
+                <div class="name">Show Students</div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="courses.jsp" class="option-btn" style="background-image: url('https://via.placeholder.com/400x400');">
+                <div class="name">Show Courses</div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

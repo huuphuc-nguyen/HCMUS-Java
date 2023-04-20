@@ -1,0 +1,34 @@
+package com.nhp.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.nhp.dao.CourseDAO;
+import com.nhp.entity.Course;
+
+/**
+ * Servlet implementation class CourseScore
+ */
+@WebServlet("/CourseScore")
+public class CourseScore extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+   
+    public CourseScore() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	
+    
+    
+	
+
+}

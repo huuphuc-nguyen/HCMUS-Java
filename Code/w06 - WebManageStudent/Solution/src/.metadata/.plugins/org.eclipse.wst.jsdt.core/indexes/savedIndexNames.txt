@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+E:\Huu Phuc\Study\@ Uni\Nam 3\HK2\Java_Safe\Code\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2759718159.index
+3364729907.index
+1195294093.index
+1100878973.index
+2422943919.index
+1773633673.index
+3617526336.index

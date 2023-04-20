@@ -1,0 +1,92 @@
+package com.nhp.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.nhp.dao.CourseScoreDAO;
+import com.nhp.dao.StudentDAO;
+import com.nhp.entity.CourseScore;
+import com.nhp.entity.Student;
+import com.nhp.entity.StudentInCourse;
+import com.nhp.dao.StudentInCourseDAO;
+
+
+@WebServlet("/StudentInCourseServlet")
+public class StudentInCourseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public StudentInCourseServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String courseId = request.getParameter("id");
+		
+		StudentInCourseDAO dataGetter = new StudentInCourseDAO();
+        List<StudentInCourse> studentList = dataGetter.getListStudentInCourse(courseId);
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(new Gson().toJson(studentList));
+        out.flush();
+	}
+
+	
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String studentId = request.getParameter("studentId");
+		String studentName = request.getParameter("studentName");
+		String grade = request.getParameter("grade");
+		String birthdate = request.getParameter("birthdate");
+		String address = request.getParameter("address");
+		String note = request.getParameter("note");
+		String action = request.getParameter("action");
+		  
+		int int_id = Integer.parseInt(studentId);
+		int int_grade = Integer.parseInt(grade);
+		  
+		Student newStudent = new Student(int_id, studentName, int_grade, birthdate, address, note);
+		StudentDAO dataAccess = new StudentDAO();
+		  
+		if (action.equals("add")) {
+			dataAccess.addStudent(newStudent);
+		}
+		else if (action.equals("update")) {
+			dataAccess.updateStudent(newStudent);
+		}
+		else if (action.equals("delete")) {
+			
+			CourseScore courseScore = new CourseScore(int_id, '0', '0');
+			CourseScoreDAO csDataAccsess = new CourseScoreDAO();
+			
+			if(csDataAccsess.deleteCourseScoreByStudentID(courseScore)) {
+				dataAccess.deleteStudent(newStudent);
+			}
+			else {
+				System.out.print("Can not delete by Id \n");
+			}
+			
+		}
+		 
+		response.setStatus(HttpServletResponse.SC_OK);
+		
+	}
+
+}

@@ -1,0 +1,109 @@
+package com.nhp.dao;
+
+import com.nhp.entity.*;
+import com.nhp.context.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.ArrayList;
+
+public class CourseScoreDAO {
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	public List<CourseScore> getListCourseScore(int id){
+		try {
+			
+			List<CourseScore> result = new ArrayList<>();
+			
+			
+			
+				String query = id == 0 ?  "SELECT * FROM CourseStudent" :  "SELECT * FROM CourseStudent WHERE StudentId=" + String.valueOf(id);
+				conn = new DBContext().getConnection();
+				ps = conn.prepareStatement(query);
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					
+					int StudentId = rs.getInt(1);
+					int CourseId = rs.getInt(2);
+					Float Score = rs.getFloat(3);
+					
+					CourseScore courseScore = new CourseScore(StudentId, CourseId, Score);
+					
+					result.add(courseScore);
+				}
+			
+			
+			
+			System.out.print(result.toString());
+			
+			conn.close();
+			
+			return result;
+		} catch (Exception e) {
+			System.out.print("EXCEPTION GET O FILE COURSESCOREDAO.JAVA");
+		}
+		
+		return null;
+	}
+	
+	public void addCourseScore(CourseScore courseScore) {
+		try {
+			
+			String query = "INSERT INTO CourseStudent (StudentId, CourseID, Score) VALUES (?, ?, ?)";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, courseScore.get_studentId());
+            ps.setInt(2, courseScore.get_courseId());
+            ps.setFloat(3, courseScore.get_score());
+            
+            ps.executeUpdate();
+            conn.close();
+			
+		} catch (Exception e) {
+			System.out.print("EXCEPTION POST O FILE COURSESCOREDAO.JAVA");
+		}
+		
+	}
+	
+	public void updateCourseScore(CourseScore courseScore) {
+		try {
+			String query = "UPDATE CourseStudent SET Score=? WHERE StudentId = ? AND CourseId = ?";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			
+			ps.setFloat(1, courseScore.get_score());
+			ps.setInt(2, courseScore.get_studentId());
+			ps.setInt(3, courseScore.get_courseId());
+			
+			ps.executeUpdate();
+			
+			conn.close();
+		}catch (Exception e) {
+			System.out.print("EXCEPTION UPDATE O FILE COURSESCOREDAO.JAVA");
+		}
+	}
+	
+	public void deleteCourseScore(CourseScore courseScore) {
+		try {
+			String query = "DELETE FROM CourseStudent WHERE StudentId = ? AND CourseId = ?";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, courseScore.get_studentId());
+			ps.setInt(2, courseScore.get_courseId());
+
+			
+			ps.executeUpdate();
+			conn.close();
+			
+		} catch (Exception e) {
+			System.out.print("EXCEPTION DELETE O FILE COURSESCOREDAO.JAVA");
+		}
+	}
+}
